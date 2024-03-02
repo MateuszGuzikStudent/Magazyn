@@ -1,6 +1,10 @@
 ﻿using System;
 using MySql.Data.MySqlClient;
-
+using ConsoleApp1.DatabaseManager;
+using ConsoleApp1.Entity;
+using ConsoleApp1.User;
+using ConsoleApp1.Produkt;
+using ConsoleApp1.UserLogin;
 class Program
 {
     static void Main(string[] args)
@@ -32,29 +36,7 @@ class Program
         }
         
     }
-    public class DatabaseManager
-    {
-        string connectionString = "Server=localhost;Port=3306;Database=projektprogramowanie;Uid=root;";
-
-        public bool ValidateLogin(string username, string password)
-        {
-            using (MySqlConnection connection = new MySqlConnection(connectionString))
-            {
-                string query = "SELECT * FROM users WHERE username = @username AND password = @password";
-
-                MySqlCommand command = new MySqlCommand(query, connection);
-                command.Parameters.AddWithValue("@username", username);
-                command.Parameters.AddWithValue("@password", password);
-
-                connection.Open();
-
-                using (MySqlDataReader reader = command.ExecuteReader())
-                {
-                    return reader.Read();
-                }
-            }
-        }
-    }
+   
     static void WorkerMenu()
     {
         bool exit = false;
@@ -542,33 +524,11 @@ class Program
 }
 
 
-class Entity
-{
-    public int Id { get; set; }
-}
 
-class User : Entity
-{
-    public string Imie { get; set; }
-    public string Nazwisko { get; set; }
-}
 
-class Produkt : Entity
-{
-    public string Nazwa { get; set; }
-    public DateTime DataRozpoczęcia { get; set; }
-    public DateTime DataZakończenia { get; set; }
-    public int Ilość { get; set; }
-    public string Wielkość { get; set; }
-    public int UzytkownikId { get; set; }
-}
-public class UserLogin
-{
-    public int Id { get; set; }
-    public string Username { get; set; }
-    public string Password { get; set; }
-    public string Role { get; set; }
-}
+
+
+
 
 
 
